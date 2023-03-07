@@ -1,13 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bakbak+One&family=Moon+Dance&family=Quicksand:wght@500&family=Righteous&family=Tilt+Prism&display=swap");
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #282727;
+  --bs-bg-opacity: 1;
+  /* background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; */
+  color: white;
+}
+html::-webkit-scrollbar {
+  width: 0.5vw;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html::-webkit-scrollbar-thumb {
+  background-color: #eee;
+  border-radius: 12px;
+  height: 50px;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: transparent;
+  margin: 23px;
+}
+
+h1 {
+  font-family: Tilt Prism;
+  margin: 12px;
+  text-align: center;
+}
+p {
+  font-family: Bakbak One;
+}
+
+main {
+  margin: 20px auto;
+}
+.main {
+  width: 100%;
+}
+
+.box-container {
+  /* margin: 40px; */
+  margin: 150px;
+
+  display: flex;
+}
+
+.input {
+  background-color: transparent !important;
+  width: 50%;
+  color: white !important;
+}
+
+.box {
+  border: 2px white solid;
+  border-radius: 30px;
+  box-shadow: black 4px 3px 4px;
+  display: grid;
+  place-items: center;
+  width: 45%;
+  padding: 30px;
+  margin: 20px;
+}
+
+.box:hover {
+  box-shadow: #000 4px 3px 4px 3px;
+}
+
+img {
+  width: 70px;
+}
+
+.img {
+  width: 70px;
+  background-color: rgb(33, 35, 33);
+  margin-top: -60px;
+  border-radius: 50%;
+}
+
+button {
+  background-color: blue;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 430px) {
+  .input {
+    width: 100% !important;
+  }
+  .input[type="submit"] {
+    width: 85% !important;
+  }
+  body {
+    margin: 40px;
+  }
+  .box-container {
+    display: grid;
+    place-content: center;
+    place-items: center;
+  }
+  .box {
+    width: 85%;
+    margin: 30px;
+    padding: 20px;
+  }
+}
+
+/* Main */
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 23px;
+}
+
+.link {
+  color: white;
+  font-weight: 400;
+  text-decoration: none;
+  padding: 13px;
+}
+
+.link:hover {
+  color: white;
+}
+
+.active {
+  background-color: dodgerblue;
+  border-radius: 12px;
+}
+
+.form {
+  width: 100%;
+}
+
+/* Details */
+.disabled {
+  background-color: rgb(97, 97, 97) !important;
+}
+
+.add {
+  background-color: transparent;
+  border-radius: 12px;
+  border: 1px solid white;
+  margin: 12px;
+}
+
+.label {
+  font-family: Arial, sans-serif;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+.companies option {
+  background-color: #282727;
+}
+
+.label {
+  font-weight: 300;
+}
+
+select {
+  height: 50vh;
+}
+
+.dashboard {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.name {
+  font-family: quicksand;
+}
+
+.profile-pic {
+  width: 150px;
+}
+
+.profile-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 12px;
+  padding: 20px;
+  border-radius: 20px;
+  border: white solid 2px;
+}
+
+.dashboard-container {
+  border-bottom: 2px solid white;
+  padding: 12px;
 }

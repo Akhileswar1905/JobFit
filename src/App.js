@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Route, Routes } from "react-router-dom";
+import Home from "./components/Home.js";
+import Login from "./Forms/Login.js";
+import SignUp from "./Forms/SignUp.js";
+import Auth from "./Forms/Auth.js";
+import AuthCom from "./Forms/AuthCom.js";
+import SignUpCom from "./Forms/SignUpCom.js";
+import NotFound from "./components/NotFound.js";
+import DashBoard from "./Profile/DashBoard.js";
+import ComDashBoard from "./Profile/ComDashBoard.js";
+import Details from "./Forms/Details.js";
+import ComDetails from "./Forms/ComDetails.js";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="authcom" element={<AuthCom />}>
+          <Route index element={<SignUpCom />} />
+          <Route path="signup-com" element={<SignUpCom />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+        <Route path="auth" element={<Auth />}>
+          <Route index element={<SignUp />} />
+          <Route path="signup" element={<SignUp />}></Route>
+          <Route path="login" element={<Login />} />
+        </Route>
+        <Route path="emp-details" element={<Details />} />
+        <Route path="com-details" element={<ComDetails />} />
+        <Route path="dashboard" element={<DashBoard />} />
+        <Route path="company-dashboard" element={<ComDashBoard />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 
