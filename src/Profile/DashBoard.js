@@ -4,13 +4,13 @@ const DashBoard = () => {
   const location = useLocation();
   const formData = location.state.formData;
   const companies = [];
+  const skills = formData.SkillSet.split(",");
   let i = 0;
   if (formData.company) {
     formData.company.forEach((company) => {
       i++;
       if (i < formData.company.length) {
         companies.push(company);
-        companies.push(",");
       } else {
         companies.push(company);
       }
@@ -19,7 +19,86 @@ const DashBoard = () => {
 
   return (
     <div className="dashboard">
+      {/* Upper Box */}
       <div className="dash-box">
+        <div className="profile">
+          <img
+            src={formData.profilePic}
+            alt="profile-pic"
+            className="profile-pic"
+          />
+        </div>
+        <div className="personal-info">
+          <h1 className="name">{formData.Fname + " " + formData.Lname}</h1>
+          <p>Email: {formData.Email} </p>
+          <p>Phone number: {formData.Phonenumber}</p>
+          <p>About: {formData.profile}</p>
+        </div>
+      </div>
+
+      <div className="lower-box">
+        {/* Education, SkillSet, Certification */}
+        <div className="box-1">
+          <div className="dashboard-container education">
+            <h3>Education</h3>
+            <p> {formData.education} </p>
+          </div>
+
+          <div className="dashboard-container skills">
+            <h3>Skills</h3>
+            <ul>
+              {skills.map((skill, index) => (
+                <li key={index}>{skill}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="dashboard-container certification">
+            <h3>Certifications</h3>
+            <p>
+              {" "}
+              {
+                <>
+                  {formData.certificates.substr(0, 50) + "..."}
+
+                  <a href={formData.certificates} target="_blank">
+                    <button className="mt-1 cred">Credentials</button>
+                  </a>
+                </>
+              }{" "}
+            </p>
+          </div>
+        </div>
+
+        {/* Experience, Projects and Companies Interested In */}
+        <div className="box-2">
+          <div className="dashboard-container experience">
+            <h3>Experiences</h3>
+            <p> {formData.experience} </p>
+          </div>
+
+          <div className="dashboard-container projects">
+            <h3>Projects</h3>
+            <p> {formData.projects} </p>
+          </div>
+
+          <div className="dashboard-container company">
+            <h3>Companies you are interested in</h3>
+            <ul>
+              {companies.map((company, index) => (
+                <li key={index}>{company}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DashBoard;
+
+/*----------------------------------------------------------------
         <div className="profile-name">
           <img
             src={formData.profilePic}
@@ -38,6 +117,11 @@ const DashBoard = () => {
         <div className="dashboard-container education">
           <h3>Education</h3>
           <p>Education: {formData.education} </p>
+        </div>
+
+        <div className="dashboard-container skills">
+          <h3>Skills</h3>
+          <p>Skills : {formData.SkillSet.replaceAll(",", "\n")} </p>
         </div>
 
         <div className="dashboard-container certification">
@@ -59,9 +143,4 @@ const DashBoard = () => {
           <h3>Companies you are interested in</h3>
           <p>Companies: {companies} </p>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default DashBoard;
+------------------------------------------------------------------*/

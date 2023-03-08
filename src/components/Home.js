@@ -5,6 +5,18 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const navigate = useNavigate();
 
+  const apiEndpoint = "https://api.vercel.com";
+  const apiToken = "WujLdaQTLWW9GB8eD0RHmPk3";
+
+  fetch(`${apiEndpoint}/v9/projects`, {
+    headers: {
+      Authorization: `Bearer ${apiToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error(error));
+
   return (
     <div className="container">
       <header>

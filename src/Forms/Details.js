@@ -16,6 +16,7 @@ function Details() {
   const [experience, setExperience] = useState("");
   const [company, setCompany] = useState("");
   const [profile, setProfile] = useState("");
+  const [skillSet, setSkillSet] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ function Details() {
       Lname: signupForm.Lname,
       Email: signupForm.Email,
       Phonenumber: signupForm.Phonenumber,
+      SkillSet: skillSet,
     };
     navigate("/dashboard", { state: { formData } });
   };
@@ -130,6 +132,18 @@ function Details() {
           />
         </Form.Group>
 
+        {/* Skill set */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Skills</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Your Skills (Technical and Non-Technical skills)"
+            onChange={(e) => setSkillSet(e.target.value)}
+            className="input"
+          />
+        </Form.Group>
+
         {/* Certifications */}
         <Form.Group className="mb-3">
           <Form.Label className="label">Certifications</Form.Label>
@@ -173,22 +187,74 @@ function Details() {
                 console.log(selectedOptions);
               }}
             >
-              <option value="Google">Google</option>
-              <option value="Facebook">Facebook</option>
-              <option value="Amazon">Amazon</option>
-              <option value="Apple">Apple</option>
-              <option value="Microsoft">Microsoft</option>
-              <option value="Netflix">Netflix</option>
-              <option value="Tesla">Tesla</option>
-              <option value="Flipkart">Flipkart</option>
-              <option value="Adobe">Adobe</option>
-              <option value="Uber">Uber</option>
-              <option value="Airbnb">Airbnb</option>
-              <option value="Deloitte">Deloitte</option>
-              <option value="JPMorgan">JPMorgan</option>
-              <option value="Cisco">Cisco</option>
-              <option value="Infosys">Infosys</option>
-              <option value="TCS">Tata Consultancy Services</option>
+              <optgroup label="Information Technology">
+                <option value="Apple">Apple</option>
+                <option value="Google">Google</option>
+                <option value="Microsoft">Microsoft</option>
+                <option value="Alphabet">Alphabet</option>
+                <option value="Tencent">Tencent</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Samsung Electronics">Samsung Electronics</option>
+                <option value="Taiwan Semiconductor Manufacturing">
+                  Taiwan Semiconductor Manufacturing
+                </option>
+                <option value="Intel">Intel</option>
+                <option value="Oracle">Oracle</option>
+                <option value="Cisco Systems">Cisco Systems</option>
+              </optgroup>
+              <optgroup label="Health Care">
+                <option value="Johnson & Johnson">Johnson & Johnson</option>
+                <option value="Roche Holding">Roche Holding</option>
+                <option value="Novartis">Novartis</option>
+                <option value="Pfizer">Pfizer</option>
+                <option value="Merck">Merck</option>
+                <option value="Abbott Laboratories">Abbott Laboratories</option>
+                <option value="Bristol-Myers Squibb">
+                  Bristol-Myers Squibb
+                </option>
+                <option value="Eli Lilly">Eli Lilly</option>
+                <option value="Amgen">Amgen</option>
+                <option value="AstraZeneca">AstraZeneca</option>
+              </optgroup>
+              <optgroup label="Financials">
+                <option value="Berkshire Hathaway">Berkshire Hathaway</option>
+                <option value="JPMorgan Chase">JPMorgan Chase</option>
+                <option value="Visa">Visa</option>
+                <option value="Mastercard">Mastercard</option>
+                <option value="Bank of America">Bank of America</option>
+                <option value="Wells Fargo">Wells Fargo</option>
+                <option value="Alibaba Group Holding">
+                  Alibaba Group Holding
+                </option>
+                <option value="PayPal Holdings">PayPal Holdings</option>
+                <option value="Citigroup">Citigroup</option>
+                <option value="American Express">American Express</option>
+              </optgroup>
+              <optgroup label="Energy">
+                <option value="Exxon Mobil">Exxon Mobil</option>
+                <option value="Chevron">Chevron</option>
+                <option value="Royal Dutch Shell">Royal Dutch Shell</option>
+                <option value="BP">BP</option>
+                <option value="Total">Total</option>
+                <option value="China Petroleum & Chemical">
+                  China Petroleum & Chemical
+                </option>
+                <option value="ConocoPhillips">ConocoPhillips</option>
+                <option value="Eni">Eni</option>
+                <option value="PetroChina">PetroChina</option>
+                <option value="Rosneft Oil">Rosneft Oil</option>
+              </optgroup>
+              <optgroup label="Consumer Discretionary">
+                <option value="Amazon.com">Amazon.com</option>
+                <option value="Tesla">Tesla</option>
+                <option value="Walt Disney">Walt Disney</option>
+                <option value="Nike">Nike</option>
+                <option value="Comcast">Comcast</option>
+                <option value="Home Depot">Home Depot</option>
+                <option value="McDonald's">McDonald's</option>
+                <option value="Netflix">Netflix</option>
+                <option value="Booking Holdings">Booking Holdings</option>
+              </optgroup>
             </select>
           </div>
         </Form.Group>
