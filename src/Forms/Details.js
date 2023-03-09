@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useLocation, useNavigate } from "react-router";
 import "../index.css";
+import { doc, setDoc } from "firebase/firestore";
+import { app, db, storage } from "./FirebaseAuth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function Details() {
   const location = useLocation();
   const signupForm = location.state.formData;
   const navigate = useNavigate();
+  const auth = getAuth(app);
 
   const [profilePic, setProfilePic] = useState(null);
   const [education, setEducation] = useState("");
@@ -17,9 +22,71 @@ function Details() {
   const [company, setCompany] = useState("");
   const [profile, setProfile] = useState("");
   const [skillSet, setSkillSet] = useState("");
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const uploadPic = () => {
+      const storageRef = ref(storage, profilePic);
+
+      const uploadTask = uploadBytesResumable(storageRef, profilePic);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setProfilePic(downloadURL);
+          });
+        }
+      );
+    };
+    profilePic && uploadPic();
+  }, [profilePic]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        signupForm.Email,
+        signupForm.Password
+      );
+      // Add a new document in collection "formData"
+      await setDoc(doc(db, "formData", res.user.uid), {
+        profilePic: profilePic,
+        education: education,
+        certificates: certificates,
+        projects: projects,
+        experience: experience,
+        company: company,
+        profile: profile,
+        Fname: signupForm.Fname,
+        Lname: signupForm.Lname,
+        Email: signupForm.Email,
+        Phonenumber: signupForm.Phonenumber,
+        SkillSet: skillSet,
+      });
+    } catch (err) {
+      setError(true);
+    }
 
     const formData = {
       profilePic: profilePic,
@@ -263,6 +330,8 @@ function Details() {
         <Button variant="primary" type="submit">
           Submit
         </Button>
+
+        {error && navigate("/auth/login")}
       </Form>
     </div>
   );

@@ -23,11 +23,7 @@ function Login() {
         navigate("/dashboard");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
         setError(true);
-        console.log(errorMessage);
       });
   };
   return (
