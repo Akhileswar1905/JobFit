@@ -5,7 +5,7 @@ const NavBar = () => {
     <div className="container">
       <header>
         <nav>
-          <ul>
+          <ul className="nav">
             <NavLink className={"link"} to="login">
               Login
             </NavLink>

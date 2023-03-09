@@ -242,6 +242,12 @@ select {
 }
 
 @media screen and (max-width: 430px) {
+  .link {
+    font-size: 22px;
+  }
+  select {
+    height: 3vh;
+  }
   .lower-box {
     display: block;
   }
@@ -281,6 +287,9 @@ select {
 }
 
 @media screen and (max-width: 380px) {
+  .link {
+    font-size: 16px;
+  }
   .profile-pic {
     width: 150px;
   }

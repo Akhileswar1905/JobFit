@@ -10,11 +10,8 @@ import DashBoard from "./Profile/DashBoard.js";
 import ComDashBoard from "./Profile/ComDashBoard.js";
 import Details from "./Forms/Details.js";
 import ComDetails from "./Forms/ComDetails.js";
-import backgroundImage from "./images/background.svg";
 
 function App() {
-  document.body.style.backgroundImage = "backgroundImage";
-  // document.body.style.backgroundColor = "black";
   return (
     <>
       <Routes>

@@ -2,17 +2,22 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "./FirebaseAuth.js";
 
 function SignUp() {
   const navigate = useNavigate();
+  const auth = getAuth(app);
 
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [pno, setPno] = useState("");
+  const [error, setError] = useState(false);
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     const formData = {
       Fname: fname,
@@ -21,7 +26,18 @@ function SignUp() {
       Phonenumber: pno,
     };
 
-    navigate("/emp-details", { state: { formData } });
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        navigate("/emp-details", { state: { formData } });
+      })
+      .catch((error) => {
+        setError(true);
+
+        console.log(error);
+      });
   };
 
   return (
@@ -84,8 +100,11 @@ function SignUp() {
               type="password"
               className="input"
               placeholder="Enter Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
+
+          {error && navigate("/auth/login")}
 
           <Button variant="primary" type="submit">
             Submit
