@@ -2,37 +2,22 @@ import { useLocation } from "react-router-dom";
 
 const DashBoard = () => {
   const location = useLocation();
-  const formData = location.state.formData;
-  const companies = [];
+  const formData = location.state.data;
   const skills = formData.SkillSet.split(",");
-  let i = 0;
-  if (formData.company) {
-    formData.company.forEach((company) => {
-      i++;
-      if (i < formData.company.length) {
-        companies.push(company);
-      } else {
-        companies.push(company);
-      }
-    });
-  }
+  console.log(formData);
 
   return (
     <div className="dashboard">
       {/* Upper Box */}
       <div className="dash-box">
         <div className="profile">
-          <img
-            src={formData.profilePic}
-            alt="profile-pic"
-            className="profile-pic"
-          />
+          <img src={formData.img} alt="profile-pic" className="profile-pic" />
         </div>
         <div className="personal-info">
           <h1 className="name">{formData.Fname + " " + formData.Lname}</h1>
           <p>Email: {formData.Email} </p>
-          <p>Phone number: {formData.Phonenumber}</p>
-          <p>About: {formData.profile}</p>
+          <p>Phone number: {formData.PhoneNumber}</p>
+          <p>About: {formData.Profile}</p>
         </div>
       </div>
 
@@ -41,7 +26,7 @@ const DashBoard = () => {
         <div className="box-1">
           <div className="dashboard-container education">
             <h3>Education</h3>
-            <p> {formData.education} </p>
+            <p> {formData.Education} </p>
           </div>
 
           <div className="dashboard-container skills">
@@ -58,13 +43,9 @@ const DashBoard = () => {
             <p>
               {" "}
               {
-                <>
-                  {formData.certificates.substr(0, 50) + "..."}
-
-                  <a href={formData.certificates} target="_blank">
-                    <button className="mt-1 cred">Credentials</button>
-                  </a>
-                </>
+                <a href={formData.certificates} target="_blank">
+                  <button className="mt-1 cred">Credentials</button>
+                </a>
               }{" "}
             </p>
           </div>
@@ -74,21 +55,12 @@ const DashBoard = () => {
         <div className="box-2">
           <div className="dashboard-container experience">
             <h3>Experiences</h3>
-            <p> {formData.experience} </p>
+            <p> {formData.Experience} </p>
           </div>
 
           <div className="dashboard-container projects">
             <h3>Projects</h3>
             <p> {formData.projects} </p>
-          </div>
-
-          <div className="dashboard-container company">
-            <h3>Companies you are interested in</h3>
-            <ul>
-              {companies.map((company, index) => (
-                <li key={index}>{company}</li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

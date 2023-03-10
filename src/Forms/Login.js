@@ -2,29 +2,35 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../index.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "./FirebaseAuth.js";
+import { app, db } from "./FirebaseAuth.js";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { doc, getDoc } from "firebase/firestore";
+
 function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const auth = getAuth(app);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-        console.log(user);
-        console.log("sucessfully signed in");
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        setError(true);
-      });
+    try {
+      const auth = getAuth(app);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      console.log(res.user.uid);
+      const docRef = doc(db, "userData", res.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        const data = docSnap.data();
+        navigate("/dashboard", { state: { data } });
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <Form className="form" onSubmit={handleLogin}>

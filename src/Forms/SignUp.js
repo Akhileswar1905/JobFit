@@ -1,99 +1,260 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
+import "../index.css";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { app, db, storage } from "./FirebaseAuth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function SignUp() {
   const navigate = useNavigate();
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [pno, setPno] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({});
+  const [file, setFile] = useState("");
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // useEffect
+  useEffect(() => {
+    const uploadFile = () => {
+      const filename = new Date().getTime() + file.name; //setting filename
+      console.log(filename);
+      const storageRef = ref(storage, filename);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    const formData = {
-      Fname: fname,
-      Lname: lname,
-      Email: email,
-      Phonenumber: pno,
-      Password: password,
+      // Progress
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            setData((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
     };
-    navigate("/emp-details", { state: { formData } });
+    file && uploadFile();
+  }, [file]);
+
+  // Entering data
+  const handleInputChange = (e) => {
+    const id = e.target.id;
+    const value = e.target.value;
+    setData({ ...data, [id]: value });
+  };
+
+  // Submitting data
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth(app);
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        data.Email,
+        data.Password
+      );
+
+      await setDoc(doc(db, "userData", res.user.uid), {
+        ...data,
+        timestamp: serverTimestamp(),
+      });
+      console.log("Hello");
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
+    navigate("/dashboard", { state: { data } });
   };
 
   return (
-    <div>
-      <div>
-        <Form onSubmit={handleSubmit}>
-          {/* First Name */}
-          <Form.Group className="mb-3">
-            <Form.Label>First Name</Form.Label>
+    <div className="container">
+      <h1>SignUp Form</h1>
+      <Form onSubmit={handleSubmit}>
+        {/* First Name */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">First name</Form.Label>
+          <Form.Control
+            id="Fname"
+            required
+            type="text"
+            className="input"
+            onChange={handleInputChange}
+            placeholder="Enter Your First name"
+          />
+        </Form.Group>
+
+        {/* Last Name */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Last name</Form.Label>
+          <Form.Control
+            id="Lname"
+            required
+            type="text"
+            className="input"
+            placeholder="Enter Your Last name"
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        {/* Email */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Email ID</Form.Label>
+          <Form.Control
+            id="Email"
+            required
+            type="email"
+            placeholder="Enter email"
+            className="input"
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        {/* Phone Number */}
+        <Form.Group className="mb-3">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            required
+            id="PhoneNumber"
+            type="phone"
+            className="input"
+            placeholder="Enter You Phone Number"
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        {/* Password */}
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            required
+            id="Password"
+            type="password"
+            className="input"
+            placeholder="Enter Password"
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        {/* Profile Pic */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Profile Picture</Form.Label>
+          <Form.Control
+            id="profilePicture"
+            required
+            type="file"
+            className="input"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+        </Form.Group>
+
+        {/* Profile */}
+        <Form.Group className="mb-3">
+          <p className="label">Profile</p>
+          <textarea
+            id="Profile"
+            name="Profile"
+            className="input"
+            cols="30"
+            rows="10"
+            placeholder="Tell us about yourself..."
+            onChange={handleInputChange}
+          ></textarea>
+        </Form.Group>
+
+        {/* Education */}
+        <div className="education edu">
+          <Form.Group className=" mb-3">
+            <Form.Label className="label">Education</Form.Label>
             <Form.Control
+              id="Education"
               required
               type="text"
+              placeholder="About Your Education"
               className="input"
-              placeholder="Enter Your First Name"
-              onChange={(e) => setFname(e.target.value)}
+              onChange={handleInputChange}
             />
           </Form.Group>
+        </div>
 
-          {/* Last Name */}
-          <Form.Group className="mb-3">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              required
-              className="input"
-              type="text"
-              placeholder="Enter Your Last Name"
-              onChange={(e) => setLname(e.target.value)}
-            />
-          </Form.Group>
+        {/* Experience */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Experience</Form.Label>
+          <Form.Control
+            id="Experience"
+            required
+            type="text"
+            placeholder="Your Experience"
+            onChange={handleInputChange}
+            className="input"
+          />
+        </Form.Group>
 
-          {/* Email */}
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              required
-              type="email"
-              className="input"
-              placeholder="Enter You Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
+        {/* Skill set */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Skills</Form.Label>
+          <Form.Control
+            id="SkillSet"
+            required
+            type="text"
+            placeholder="Your Skills (Technical and Non-Technical skills)"
+            onChange={handleInputChange}
+            className="input"
+          />
+        </Form.Group>
 
-          {/* Phone Number */}
-          <Form.Group className="mb-3">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              required
-              type="phone"
-              className="input"
-              placeholder="Enter You Phone Number"
-              onChange={(e) => setPno(e.target.value)}
-            />
-          </Form.Group>
+        {/* Certifications */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Certifications</Form.Label>
+          <Form.Control
+            id="Certifications"
+            required
+            type="text"
+            placeholder="Mention The URLs of Certifications"
+            onChange={handleInputChange}
+            className="input"
+          />
+        </Form.Group>
 
-          {/* Password */}
-          <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              required
-              type="password"
-              className="input"
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
+        {/* Projects */}
+        <Form.Group className="mb-3">
+          <Form.Label className="label">Projects</Form.Label>
+          <Form.Control
+            id="Projects"
+            required
+            type="text"
+            placeholder="Mention The URLs of Projects"
+            onChange={handleInputChange}
+            className="input"
+          />
+        </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-      </div>
+        {/* Button */}
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+
+        {error && navigate("/auth/login")}
+      </Form>
     </div>
   );
 }
