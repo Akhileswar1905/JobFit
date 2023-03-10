@@ -9,7 +9,6 @@ import NotFound from "./components/NotFound.js";
 import DashBoard from "./Profile/DashBoard.js";
 import ComDashBoard from "./Profile/ComDashBoard.js";
 import ComDetails from "./Forms/ComDetails.js";
-import { useState } from "react";
 
 function App() {
   const currentUser = true;
