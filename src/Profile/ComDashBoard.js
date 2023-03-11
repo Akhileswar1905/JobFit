@@ -2,37 +2,49 @@ import { useLocation } from "react-router-dom";
 
 const ComDashBoard = () => {
   const location = useLocation();
-  const formData = location.state.formData;
-  const skillSet = formData.SkillSet.split(",");
-  console.log(skillSet);
-  console.log(formData.SkillSet);
+  const formData = location.state.data;
+  const skills = formData.SkillsRequired.split(",");
+  console.log(formData);
+
   return (
     <div className="dashboard">
+      {/* Upper Box */}
       <div className="dash-box">
-        <div className="profile-name">
-          <img
-            src={formData.profilePic}
-            alt="profile-pic"
-            className="profile-pic"
-          />
-          <h1 className="name">{formData.Fname + " " + formData.Lname}</h1>
+        <div className="profile">
+          <img src={formData.img} alt="profile-pic" className="profile-pic" />
         </div>
-        <div className="dashboard-container personal-info">
-          <h3>Company Information</h3>
-          <p>Email : {formData.Email} </p>
-          <p>Contact Details : {formData.contact}</p>
-          <p>Description : {formData.profile}</p>
+        <div className="personal-info">
+          <h1 className="name">Company Name: {formData.CompanyName} </h1>
+          <p>Name: {formData.Fname + " " + formData.Lname}</p>
+          <p>Email: {formData.Email} </p>
+          <p>Phone number: {formData.ContactInfo}</p>
+          <p>About: {formData.Description}</p>
+        </div>
+      </div>
+
+      <div className="lower-box">
+        {/*  SkillsRequired */}
+        <div className="box-1">
+          <div className="dashboard-container skills">
+            <h3>Skills</h3>
+            <ul>
+              {skills.map((skill, index) => (
+                <li key={index}>{skill}</li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="dashboard-container experience">
-          <h3>Experiences</h3>
-          <p>Experience : {formData.experience} </p>
-        </div>
-
-        <div className="dashboard-container skills">
-          <h3>Required Skills</h3>
-          <p>Skills : {formData.SkillSet.replaceAll(",", " ")} </p>
-          <p>Posts : {formData.Posts}</p>
+        {/* Experience, Projects and Companies Interested In */}
+        <div className="box-2">
+          <div className="dashboard-container experience">
+            <h3>Experiences</h3>
+            <p> {formData.Experience} </p>
+          </div>
+          <div className="dashboard-container posts">
+            <h3>Posts</h3>
+            <p> {formData.Posts} </p>
+          </div>
         </div>
       </div>
     </div>

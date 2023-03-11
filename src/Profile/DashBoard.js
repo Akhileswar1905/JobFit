@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 
 const DashBoard = () => {
   const location = useLocation();
-  const formData = location.state.data;
+  const formData = JSON.parse(localStorage.getItem("dashboard"));
   const skills = formData.SkillSet.split(",");
   console.log(formData);
 

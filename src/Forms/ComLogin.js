@@ -3,33 +3,27 @@ import Form from "react-bootstrap/Form";
 import "../index.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app, db } from "./FirebaseAuth.js";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { doc, getDoc } from "firebase/firestore";
-import { AuthContext } from "../Context/AuthContext";
 
-function Login() {
+function ComLogin() {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const { dispatch } = useContext(AuthContext);
-
-  const handleLogin = async (e) => {
+  const handleComLogin = async (e) => {
     e.preventDefault();
     try {
       const auth = getAuth(app);
       const res = await signInWithEmailAndPassword(auth, email, password);
-
-      const docRef = doc(db, "userData", res.user.uid);
+      console.log(res.user.uid);
+      const docRef = doc(db, "companyData", res.user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
         const data = docSnap.data();
-        dispatch({ type: "LOGIN", payload: data });
-        localStorage.setItem("dashboard", data);
-        navigate("/dashboard", { state: { data } });
+        navigate("/company-dashboard", { state: { data } });
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -37,10 +31,11 @@ function Login() {
       }
     } catch (err) {
       console.log(err);
+      setError(true);
     }
   };
   return (
-    <Form className="form" onSubmit={handleLogin}>
+    <Form className="form" onSubmit={handleComLogin}>
       <Form.Group className="mb-3 " controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
@@ -65,9 +60,9 @@ function Login() {
         Submit
       </Button>
 
-      {error && navigate("/auth/signup")}
+      {error && navigate("/authcom/signup-com")}
     </Form>
   );
 }
 
-export default Login;
+export default ComLogin;
