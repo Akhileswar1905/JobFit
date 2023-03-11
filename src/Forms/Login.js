@@ -28,7 +28,8 @@ function Login() {
         console.log("Document data:", docSnap.data());
         const data = docSnap.data();
         dispatch({ type: "LOGIN", payload: data });
-        localStorage.setItem("dashboard", data);
+        console.log(data);
+        localStorage.setItem("dashboard", JSON.stringify(data));
         navigate("/dashboard", { state: { data } });
       } else {
         // doc.data() will be undefined in this case
