@@ -77,12 +77,13 @@ function SignUp() {
         ...data,
         timestamp: serverTimestamp(),
       });
+      localStorage.setItem("dashboard", JSON.stringify(data));
+      navigate("/dashboard");
       console.log("Hello");
     } catch (err) {
       console.log(err);
       setError(true);
     }
-    navigate("/dashboard", { state: { data } });
   };
 
   return (

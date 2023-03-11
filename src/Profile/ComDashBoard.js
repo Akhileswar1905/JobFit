@@ -1,7 +1,4 @@
-import { useLocation } from "react-router-dom";
-
 const ComDashBoard = () => {
-  const location = useLocation();
   const formData = JSON.parse(localStorage.getItem("company-dashboard"));
 
   const skills = formData.SkillsRequired.split(",");

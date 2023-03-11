@@ -75,6 +75,8 @@ function SignUpCom() {
         ...data,
         timestamp: serverTimestamp(),
       });
+      localStorage.setItem("company-dashboard", JSON.stringify(data));
+      navigate("/company-dashboard");
     } catch (err) {
       console.log(err);
       setError(true);

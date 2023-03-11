@@ -207,6 +207,7 @@ select {
   backdrop-filter: blur(100px);
   color: white;
   margin: 0;
+  padding: 8px;
 }
 .brand {
   font-size: 32px;
@@ -220,7 +221,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 5px;
 }
 
 .nav-box img {
