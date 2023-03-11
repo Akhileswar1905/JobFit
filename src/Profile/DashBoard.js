@@ -43,7 +43,7 @@ const DashBoard = () => {
             <p>
               {" "}
               {
-                <a href={formData.certificates} target="_blank">
+                <a href={formData.Certifications}>
                   <button className="mt-1 cred">Credentials</button>
                 </a>
               }{" "}
@@ -60,7 +60,7 @@ const DashBoard = () => {
 
           <div className="dashboard-container projects">
             <h3>Projects</h3>
-            <p> {formData.projects} </p>
+            <p> {formData.Projects} </p>
           </div>
         </div>
       </div>

@@ -2,7 +2,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
+import logo from "../images/logo.png";
 function Navigation() {
+  const nav = localStorage.getItem("nav");
   return (
     <Navbar
       sticky="top"
@@ -12,8 +14,9 @@ function Navigation() {
       bg="dark"
       variant="dark"
     >
-      <Container>
+      <Container className="nav-box">
         <NavLink className={"nav-link brand"} to="/">
+          <img src={logo} alt="" />
           JobFit
         </NavLink>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -23,7 +26,7 @@ function Navigation() {
             <NavLink className={"nav-link"} to="/">
               Home
             </NavLink>
-            <NavLink className={"nav-link"} to="dashboard">
+            <NavLink className={"nav-link"} to={nav}>
               Dashboard
             </NavLink>
             <NavLink className={"nav-link"} to="companies">

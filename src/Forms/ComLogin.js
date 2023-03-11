@@ -3,15 +3,18 @@ import Form from "react-bootstrap/Form";
 import "../index.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app, db } from "./FirebaseAuth.js";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { doc, getDoc } from "firebase/firestore";
+import { AuthContext } from "../Context/AuthContext";
 
 function ComLogin() {
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { dispatch } = useContext(AuthContext);
+
   const handleComLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,6 +26,12 @@ function ComLogin() {
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
         const data = docSnap.data();
+
+        dispatch({ type: "LOGIN", payload: data });
+        console.log(data);
+        localStorage.setItem("company-dashboard", JSON.stringify(data));
+        localStorage.setItem("nav", "company-dashboard");
+
         navigate("/company-dashboard", { state: { data } });
       } else {
         // doc.data() will be undefined in this case

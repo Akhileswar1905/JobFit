@@ -215,6 +215,22 @@ select {
 .navigation .active {
   background-color: transparent !important;
 }
+
+.nav-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.nav-box img {
+  margin-bottom: 7px;
+}
+
+.com-box {
+  width: 33%;
+  border-radius: 12px;
+}
 /* Media Query */
 
 @media screen and (max-width: 768px) {
