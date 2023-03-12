@@ -31,7 +31,6 @@ function Login() {
         console.log(data);
         localStorage.setItem("dashboard", JSON.stringify(data));
         localStorage.setItem("nav", "dashboard");
-
         navigate("/dashboard", { state: { data } });
       } else {
         // doc.data() will be undefined in this case

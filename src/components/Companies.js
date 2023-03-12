@@ -4,19 +4,19 @@ import { db } from "../Forms/FirebaseAuth";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
+
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState(null);
-
   useEffect(() => {
     const fetchCompanies = async () => {
+      let company = [];
       const querySnapshot = await getDocs(collection(db, "companyInfo"));
-      const data = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCompanies(data);
+      querySnapshot.forEach((doc) => {
+        company.push(doc.data());
+      });
+      setCompanies(company);
     };
     fetchCompanies();
   }, []);
@@ -72,10 +72,9 @@ const Companies = () => {
                 alt=""
                 className="website"
               />
-              <a href={popupData && popupData.web}>{popupData.web}</a>
+              <a href={popupData && popupData.web}>Job Portal</a>
             </div>
           </Modal.Body>
-
           <Modal.Footer>
             <Button variant="danger" onClick={handlePopupClose}>
               Close
