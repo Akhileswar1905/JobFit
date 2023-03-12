@@ -229,9 +229,40 @@ select {
 }
 
 .com-box {
-  width: 33%;
+  width: 30%;
   border-radius: 12px;
 }
+
+.company-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 50%;
+}
+
+.com-box {
+  margin: 23px;
+  border: 1px solid white;
+  padding: 12px;
+  display: grid;
+  place-items: center;
+}
+
+.company-list img {
+  margin: 12px;
+}
+
+.company-list {
+  display: flex;
+  justify-content: center;
+}
+.com-name {
+  text-align: center;
+  font-weight: 500;
+}
+
 /* Media Query */
 
 @media screen and (max-width: 768px) {
