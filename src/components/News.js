@@ -8,15 +8,19 @@ const News = () => {
   const apiKey = "908a1d63775a4c2eb327742ca7e89af9";
 
   useEffect(() => {
-    const fetchNews = async () => {
-      const res = await fetch(
-        "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=908a1d63775a4c2eb327742ca7e89af9"
-      );
-      const data = await res.json();
-      console.log(data.articles);
-      setSearchResults(data.articles);
-    };
-    fetchNews();
+    try {
+      const fetchNews = async () => {
+        const res = await fetch(
+          "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=908a1d63775a4c2eb327742ca7e89af9"
+        );
+        const data = await res.json();
+        console.log(data.articles);
+        setSearchResults(data.articles);
+      };
+      fetchNews();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const handleSubmit = (e) => {
