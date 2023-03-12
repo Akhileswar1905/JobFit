@@ -9,6 +9,9 @@ const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [input, setInput] = useState("");
+
   useEffect(() => {
     const fetchCompanies = async () => {
       let company = [];
@@ -17,6 +20,7 @@ const Companies = () => {
         company.push(doc.data());
       });
       setCompanies(company);
+      setSearchResults(company);
     };
     fetchCompanies();
   }, []);
@@ -28,16 +32,33 @@ const Companies = () => {
     setShowPopup(true);
   };
 
+  const handleSearch = (e) => {
+    const input = e.target.value.toLowerCase();
+    setInput(input);
+    const filteredCompanies = companies.filter((company) => {
+      return company.id.toLowerCase().includes(input);
+    });
+    setSearchResults(filteredCompanies);
+  };
+
   return (
     <>
-      <h1>Company List</h1>
+      <header className="head">
+        <h1>Company List</h1>
+        <input
+          type="search"
+          placeholder="search for companies..."
+          className="input"
+          onChange={handleSearch}
+        />
+      </header>
       <div className="company-list">
-        {companies.map((company) => (
+        {searchResults.map((company) => (
           <>
             <Card
               style={{ width: "18rem", backgroundColor: "transparent" }}
               className="com-box"
-              key={company.id}
+              key={parseInt(company.id)}
             >
               <Card.Img
                 variant="top"

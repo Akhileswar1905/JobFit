@@ -13,6 +13,7 @@ import Companies from "./components/Companies.js";
 import Navigation from "./components/Navigation.js";
 import { useContext } from "react";
 import { AuthContext } from "./Context/AuthContext.js";
+import News from "./components/News.js";
 function App() {
   const { currentUser } = useContext(AuthContext);
 
@@ -56,6 +57,14 @@ function App() {
           element={
             <ReqAuth>
               <Companies />
+            </ReqAuth>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <ReqAuth>
+              <News />
             </ReqAuth>
           }
         />

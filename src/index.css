@@ -284,6 +284,30 @@ select {
   margin: 3px;
 }
 
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.head .input {
+  width: 25%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid white;
+}
+
+.search {
+  width: 90%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid white;
+}
+
 /* Media Query */
 
 @media screen and (max-width: 768px) {

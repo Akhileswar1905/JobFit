@@ -37,6 +37,9 @@ function Navigation() {
             <NavLink className={"nav-link"} to="companies">
               Companies
             </NavLink>
+            <NavLink className={"nav-link"} to="news">
+              News
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
