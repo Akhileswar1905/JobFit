@@ -1,7 +1,21 @@
+import { useNavigate } from "react-router";
+
 const DashBoard = () => {
+  const navigate = useNavigate();
+
+  if (localStorage.getItem("user") === null) {
+    navigate("/");
+  }
+
   const formData = JSON.parse(localStorage.getItem("dashboard"));
   const skills = formData.SkillSet.split(",");
   console.log(formData);
+
+  const handleClick = () => {
+    localStorage.clear();
+    navigate("/");
+    localStorage.setItem("user", null);
+  };
 
   return (
     <div className="dashboard">
@@ -61,6 +75,9 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
+      <button className="logout" onClick={handleClick}>
+        LogOut
+      </button>
     </div>
   );
 };

@@ -4,7 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 import logo from "../images/logo.png";
 function Navigation() {
-  const nav = localStorage.getItem("nav");
+  let nav;
+  if (localStorage.getItem("user") == null) {
+    nav = "/";
+  } else {
+    nav = localStorage.getItem("nav");
+  }
   return (
     <Navbar
       sticky="top"

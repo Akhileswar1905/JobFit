@@ -263,6 +263,20 @@ select {
   font-weight: 500;
 }
 
+.modal-content {
+  background-color: transparent;
+  backdrop-filter: blur(100px);
+  padding: 23px;
+}
+#content {
+  background-color: transparent;
+}
+
+.website {
+  width: 20px;
+  margin: 3px;
+}
+
 /* Media Query */
 
 @media screen and (max-width: 768px) {

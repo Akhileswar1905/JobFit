@@ -1,4 +1,16 @@
+import { useNavigate } from "react-router";
+
 const ComDashBoard = () => {
+  const navigate = useNavigate();
+
+  if (localStorage.getItem("user") === null) {
+    navigate("/");
+  }
+  const handleClick = () => {
+    localStorage.clear();
+    navigate("/");
+    localStorage.setItem("user", null);
+  };
   const formData = JSON.parse(localStorage.getItem("company-dashboard"));
 
   const skills = formData.SkillsRequired.split(",");
@@ -45,6 +57,9 @@ const ComDashBoard = () => {
           </div>
         </div>
       </div>
+      <button className="logout" onClick={handleClick}>
+        LogOut
+      </button>
     </div>
   );
 };
