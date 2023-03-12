@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bakbak+One&family=Moon+Dance&family=Quicksand:wght@500&family=Righteous&family=Tilt+Prism&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background-color: #282727;
   --bs-bg-opacity: 1;
@@ -215,6 +221,7 @@ select {
 
 .navigation .active {
   background-color: transparent !important;
+  color: whitesmoke;
 }
 
 .nav-box {
@@ -299,7 +306,14 @@ select {
   .link {
     font-size: 22px;
   }
-
+  #root {
+    width: 98vw;
+    margin: 0;
+    margin-left: -38px !important;
+  }
+  /* #name {
+    display: none;
+  } */
   select {
     height: 3vh;
   }

@@ -22,11 +22,11 @@ function Navigation() {
       <Container className="nav-box">
         <NavLink className={"nav-link brand"} to="/">
           <img src={logo} alt="" />
-          JobFit
+          <span id="name">JobFit</span>
         </NavLink>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto"></Nav>
+          <Nav className="me-auto dummy"></Nav>
           <Nav>
             <NavLink className={"nav-link"} to="/">
               Home
