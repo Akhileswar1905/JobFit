@@ -1,21 +1,3 @@
-https://newsapi.org/v2/everything?q=apple&apiKey=908a1d63775a4c2eb327742ca7e89af9
-https://newsapi.org/v2/everything?q=apple&from=2023-03-10&to=2023-03-10&sortBy=popularity&apiKey=908a1d63775a4c2eb327742ca7e89af9
-
-https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=908a1d63775a4c2eb327742ca7e89af9
-
-
-  companies :   https://api.opencorporates.com/v0.4/companies/search?q={company_name}&api_token={your_api_key}
-https://api.opencorporates.com/v0.4/companies/search?q=&order_by=score&per_page=30
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '99db78a117mshf10d54a13f695fep172c0fjsn5044db8fc6e7',
-		'X-RapidAPI-Host': 'google-news-api1.p.rapidapi.com'
-	}
-};
-
-fetch('https://google-news-api1.p.rapidapi.com/search?language=en&q=technology&required_props=title%2Cimage%2Cdescription&limit=10', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+d60b0588-d2ec-46b2-9b5c-1cef5f3e3b00
+https://content.guardianapis.com/search?q=<company-name>&api-key=<your-api-key>&show-fields=thumbnail
+https://content.guardianapis.com/search?section=technology&show-fields=headline,trailText,thumbnail,bodyText&order-by=newest&page-size=20&api-key=<YOUR_API_KEY>

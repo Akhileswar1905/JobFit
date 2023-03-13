@@ -3,14 +3,16 @@ import { useNavigate } from "react-router";
 const DashBoard = () => {
   const navigate = useNavigate();
 
-  const formData = JSON.parse(localStorage.getItem("dashboard"));
+  let formData = JSON.parse(localStorage.getItem("dashboard"));
   const skills = formData.SkillSet.split(",");
   console.log(formData);
 
   const handleClick = () => {
     localStorage.clear();
-    navigate("/");
     localStorage.setItem("user", null);
+    navigate("/");
+    const listContent = document.querySelector(".listContent");
+    listContent.style.display = "none";
   };
 
   return (
@@ -71,7 +73,14 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
-      <button className="logout" onClick={handleClick}>
+      <button
+        className="logout"
+        onClick={(e) => {
+          handleClick(e);
+          navigate("/");
+          formData = {};
+        }}
+      >
         LogOut
       </button>
     </div>

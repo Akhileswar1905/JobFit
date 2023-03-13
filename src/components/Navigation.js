@@ -4,12 +4,23 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 import logo from "../images/logo.png";
 function Navigation() {
-  let nav;
-  if (localStorage.getItem("user") == null) {
-    nav = "/";
-  } else {
+  const listContent = document.querySelector(".listContent");
+  let nav, list;
+  if (localStorage.getItem("user") !== null) {
     nav = localStorage.getItem("nav");
   }
+
+  if (localStorage.getItem("user") === null) {
+    list = "|";
+    listContent.style.display = "none";
+  } else if (localStorage.getItem("nav") === "dashboard") {
+    list = "Companies";
+    listContent.style.display = "inline";
+  } else if (localStorage.getItem("nav") === "company-dashboard") {
+    listContent.style.display = "inline";
+    list = "Employees";
+  }
+
   return (
     <Navbar
       sticky="top"
@@ -34,8 +45,8 @@ function Navigation() {
             <NavLink className={"nav-link"} to={nav}>
               Dashboard
             </NavLink>
-            <NavLink className={"nav-link"} to="companies">
-              Companies
+            <NavLink className={"nav-link listContent"} to="companies">
+              {list}
             </NavLink>
             <NavLink className={"nav-link"} to="news">
               News

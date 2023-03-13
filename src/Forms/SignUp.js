@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
@@ -7,6 +7,7 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { app, db, storage } from "./FirebaseAuth";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { AuthContext } from "../Context/AuthContext";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function SignUp() {
   const [data, setData] = useState({});
   const [file, setFile] = useState("");
   const [error, setError] = useState(false);
+  const { dispatch } = useContext(AuthContext);
 
   // useEffect
   useEffect(() => {
@@ -65,6 +67,10 @@ function SignUp() {
   // Submitting data
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (localStorage.getItem("user") !== null) {
+      localStorage.clear();
+      localStorage.setItem("user", null);
+    }
     try {
       const auth = getAuth(app);
       const res = await createUserWithEmailAndPassword(
@@ -77,6 +83,8 @@ function SignUp() {
         ...data,
         timestamp: serverTimestamp(),
       });
+      dispatch({ type: "LOGIN", payload: data });
+
       localStorage.setItem("dashboard", JSON.stringify(data));
       navigate("/dashboard");
       console.log("Hello");

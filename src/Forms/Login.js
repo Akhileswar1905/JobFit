@@ -18,6 +18,10 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (localStorage.getItem("user") !== null) {
+      localStorage.clear();
+      localStorage.setItem("user", null);
+    }
     try {
       const auth = getAuth(app);
       const res = await signInWithEmailAndPassword(auth, email, password);

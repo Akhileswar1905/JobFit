@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
@@ -6,6 +6,7 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { app, db, storage } from "./FirebaseAuth";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { AuthContext } from "../Context/AuthContext";
 
 function SignUpCom() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function SignUpCom() {
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [file, setFile] = useState("");
+  const { dispatch } = useContext(AuthContext);
 
   // useEffect
   useEffect(() => {
@@ -63,6 +65,10 @@ function SignUpCom() {
   // Submitting data
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (localStorage.getItem("user") !== null) {
+      localStorage.clear();
+      localStorage.setItem("user", null);
+    }
     try {
       const auth = getAuth(app);
       const res = await createUserWithEmailAndPassword(
@@ -75,6 +81,8 @@ function SignUpCom() {
         ...data,
         timestamp: serverTimestamp(),
       });
+      dispatch({ type: "LOGIN", payload: data });
+
       localStorage.setItem("company-dashboard", JSON.stringify(data));
       navigate("/company-dashboard");
     } catch (err) {
