@@ -85,7 +85,9 @@ const Companies = () => {
       <Modal show={showPopup} onHide={handlePopupClose} className="popup-box">
         <div id="content">
           <Modal.Title>{popupData && popupData.id}</Modal.Title>
-          <Modal.Body>{popupData && popupData.Desc}</Modal.Body>
+          <div className="bodyText">
+            <Modal.Body>{popupData && popupData.Desc}</Modal.Body>
+          </div>
           <Modal.Body>
             <div className="web">
               <img

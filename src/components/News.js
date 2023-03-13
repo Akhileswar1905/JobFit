@@ -5,17 +5,18 @@ const News = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState(null);
-  const apiKey = "908a1d63775a4c2eb327742ca7e89af9";
+  const apiKey = "d60b0588-d2ec-46b2-9b5c-1cef5f3e3b00";
 
   useEffect(() => {
     try {
       const fetchNews = async () => {
         const res = await fetch(
-          "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=908a1d63775a4c2eb327742ca7e89af9"
+          `https://content.guardianapis.com/search?section=technology&show-fields=headline,trailText,thumbnail,bodyText&order-by=newest&page-size=20&api-key=${apiKey}`
         );
-        const data = await res.json();
-        console.log(data.articles);
-        setSearchResults(data.articles);
+        const x = await res.json();
+        console.log(x.response.results);
+        const data = x.response.results;
+        setSearchResults(data);
       };
       fetchNews();
     } catch (err) {
@@ -28,11 +29,14 @@ const News = () => {
     console.log(input);
     const fetchNews = async () => {
       const res = await fetch(
-        `https://newsapi.org/v2/everything?q=${input}&language=en&apiKey=${apiKey}`
+        `https://content.guardianapis.com/search?section=technology&q=${input}%20recruitment&api-key=${apiKey}&show-fields=thumbnail,headline,content,bodyText&order-by=newest&page-size=20
+
+        `
       );
-      const data = await res.json();
-      console.log(data.articles);
-      setSearchResults(data.articles);
+      const x = await res.json();
+      console.log(x.response.results);
+      const data = x.response.results;
+      setSearchResults(data);
     };
     fetchNews();
   };
@@ -65,11 +69,13 @@ const News = () => {
             >
               <Card.Img
                 variant="top"
-                src={news.urlToImage}
+                src={news.fields.thumbnail}
                 className="avatar"
                 alt="avatar"
               />
-              <Card.Title className="com-name">{news.title}</Card.Title>
+              <Card.Title className="com-name">
+                {news.fields.headline}
+              </Card.Title>
               <Card.Body>
                 <Button
                   onClick={() => {
@@ -86,8 +92,8 @@ const News = () => {
       </div>
       <Modal show={showPopup} onHide={handlePopupClose} className="popup-box">
         <div id="content">
-          <Modal.Title>{popupData && popupData.title}</Modal.Title>
-          <Modal.Body>{popupData && popupData.content}</Modal.Body>
+          <Modal.Title>{popupData && popupData.fields.headline}</Modal.Title>
+          <Modal.Body>{popupData && popupData.fields.bodyText}</Modal.Body>
           <Modal.Body>
             <div className="web">
               <img
@@ -95,7 +101,7 @@ const News = () => {
                 alt=""
                 className="website"
               />
-              <a href={popupData && popupData.url}>News Link</a>
+              <a href={popupData && popupData.webUrl}>News Link</a>
             </div>
           </Modal.Body>
           <Modal.Footer>

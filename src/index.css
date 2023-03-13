@@ -279,6 +279,10 @@ select {
   background-color: transparent;
 }
 
+.bodyText {
+  width: fit-content;
+}
+
 .website {
   width: 20px;
   margin: 3px;
