@@ -279,10 +279,6 @@ select {
   background-color: transparent;
 }
 
-.listContent {
-  display: none;
-}
-
 .bodyText {
   width: fit-content;
 }

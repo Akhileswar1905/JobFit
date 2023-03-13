@@ -12,12 +12,9 @@ function Navigation() {
 
   if (localStorage.getItem("user") === null) {
     list = "|";
-    listContent.style.display = "none";
   } else if (localStorage.getItem("nav") === "dashboard") {
     list = "Companies";
-    listContent.style.display = "inline";
   } else if (localStorage.getItem("nav") === "company-dashboard") {
-    listContent.style.display = "inline";
     list = "Employees";
   }
 
