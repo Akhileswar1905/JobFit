@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 const DashBoard = () => {
   const navigate = useNavigate();
 
-  let formData = JSON.parse(localStorage.getItem("dashboard"));
+  const formData = JSON.parse(localStorage.getItem("dashboard"));
   const skills = formData.SkillSet.split(",");
   console.log(formData);
 
@@ -12,7 +12,7 @@ const DashBoard = () => {
     localStorage.setItem("user", null);
     navigate("/");
     const listContent = document.querySelector(".listContent");
-    listContent.style.display = "none";
+    listContent.innerText = "|";
   };
 
   return (
@@ -73,14 +73,7 @@ const DashBoard = () => {
           </div>
         </div>
       </div>
-      <button
-        className="logout"
-        onClick={(e) => {
-          handleClick(e);
-          navigate("/");
-          formData = {};
-        }}
-      >
+      <button className="logout" onClick={handleClick}>
         LogOut
       </button>
     </div>
